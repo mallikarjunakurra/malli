@@ -20,7 +20,7 @@ public class Calculator {
 		System.out.println("The Subtraction of given numbers are....");
 		for(int i=0;i<n2.length;i++)
 		{
-			a=n2[i]-a;		
+			a-=n2[i];		
 		}
 		return (a-n1);
 	}
@@ -31,7 +31,7 @@ public class Calculator {
 		System.out.println("The Multiplication of given numbers are....");
 		for(int i=0;i<n2.length;i++)
 		{
-			a=n2[i]*a;		
+			a*=n2[i];		
 		}
 		return (a*n1);
 	}
@@ -42,7 +42,7 @@ public class Calculator {
 		System.out.println("The Division of given numbers are....");
 		for(int i=0;i<n2.length;i++)
 		{
-			a=n2[i]/a;		
+			a/=n2[i];		
 		}
 		return (a/n1);
 	}
