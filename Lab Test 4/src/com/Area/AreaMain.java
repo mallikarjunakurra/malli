@@ -5,7 +5,7 @@ public class AreaMain {
 	public static void main(String[] args) {
 		
 		// Creating object of class 'Area'
-		Shape a=new Area();
+		Area a=new Area();
 		
 		// Calling method to get area of Rectangle
 		a.RectangleArea(2,3);
