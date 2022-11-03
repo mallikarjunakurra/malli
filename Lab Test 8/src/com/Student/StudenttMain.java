@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 public class StudenttMain {
 	
+	
+	
 	public static void main(String[] args) throws IOException {
 	
 		//creating objects to a student class
@@ -36,8 +38,8 @@ public class StudenttMain {
 		{
 		   if(Pattern.matches("[A]\\w+",s[i]))
 		    {
-				System.out.println(s[i]);
-		    }
+				System.out.println(s[i]);		
+			}
 		}
-	}
+   }
 }
