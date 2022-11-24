@@ -1,0 +1,150 @@
+ 1(a). 
+create table jobs(job_id varchar(10) primary key, job_title varchar(30), min_salary float, max_salary float check(max_salary>8000));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> desc jobs;
++-------------+--------------+--------+------+----------+----------+
+| Field           |  Type            | Null    | Key   | Default  | Extra      |
++-------------+--------------+--------+------+----------+----------+
+| job_id         | int                | NO      | PRI   | NULL    |                |
+| job_title      | varchar(30) | YES    |          | NULL    |                |
+| min_salary  | float            | YES    |           | NULL    |                |
+| max_salary | float            | YES     |          | NULL    |                |
++-------------+--------------+--------+------+----------+----------+
+4 rows in set (0.01 sec)
+
+
+1(b).
+create table Countries(country_id int unique, country_name varchar(30) check(country_name in('Italy','India','China')), region_id int unique);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc countries;
++----------------+--------------+-------+------+---------+-------+
+|  Field              |   Type           | Null   | Key  | Default | Extra  |
++----------------+--------------+-------+------+---------+-------+
+| country_id      | int                | YES   | UNI  | NULL   |           |
+| country_name | varchar(30) | YES  |          | NULL   |            |
+| region_id        | int                | YES   | UNI  | NULL   |           |
++----------------+--------------+-------+------+---------+-------+
+3 rows in set (0.00 sec)
+
+
+1(c).
+create table Job_History(employee_id varchar(10) UNIQUE, start_date DATE, end_date DATE,job_id varchar(10), department_id varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc Job_History;
++----------------+--------------+-------+------+---------+-------+
+| Field               |   Type           |  Null  | Key | Default  | Extra  |
++----------------+--------------+-------+------+---------+-------+
+| employee_id   | varchar(10) | YES  | UNI  |  NULL   |           |
+| start_date        | date              | YES  |          |  NULL   |           |
+| end_date          | date             | YES  |          |  NULL   |            |
+| job_id              | varchar(10) | YES  |          |  NULL   |           |
+| department_id | varchar(10) | YES  |          |  NULL   |           |
++----------------+---------------+------+------+----------+-------+
+5 rows in set (0.00 sec)
+
+
+2(a).
+alter table Job_History add CONSTRAINT fk_job_id FOREIGN KEY (job_id) REFERENCES jobs(job_id);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc job_history;
++----------------+--------------+------+------+-----------+-------+
+| Field               |  Type            | Null | Key    | Default   | Extra |
++----------------+--------------+------+-------+----------+-------+
+| employee_id   | varchar(10) | YES  | UNI   | NULL    |           |
+| start_date        | date              | YES  |           | NULL    |           |
+| end_date          | date             | YES  |           | NULL    |           |
+| job_id              | varchar(10) | YES  | MUL | NULL    |          |
+| department_id | varchar(10) | YES  |           | NULL    |          |
++-----------------+-------------+------+--------+---------+-------+
+5 rows in set (0.00 sec)
+
+
+2(b).
+alter table countries rename Country_new;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc country_new;
++-----------------+-------------+------+------+---------+-------+
+| Field                 | Type           | Null | Key   | Default | Extra |
++-----------------+-------------+------+------+---------+-------+
+| country_id       | int               | YES  | UNI | NULL    |          |
+| country_name | varchar(30) | YES  |         | NULL   |           |
+| region_id         | int               | YES  | UNI | NULL    |          |
++-----------------+-------------+------+------+---------+-------+
+3 rows in set (0.00 sec)
+
+
+2(c).
+Alter table country_new rename column country_id to con_id;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc country_new;
++-----------------+-------------+------+-----+---------+-------+
+| Field                 | Type           | Null | Key | Default | Extra  |
++-----------------+-------------+------+-----+---------+-------+
+| con_id             | int                | YES | UNI | NULL   |           |
+| country_name | varchar(30) | YES |         | NULL   |           |
+| region_id        | int                | YES  | UNI | NULL  |           |
++----------------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+3(a).
+insert into country_new values(91,'India',82);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from country_new;
++--------+-----------------+-----------+
+| con_id | country_name | region_id |
++--------+-----------------+-----------+
+|     91    | India                 |        82     |
++--------+-----------------+-----------+
+1 row in set (0.00 sec)
+
+insert into country_new values(92,'Pak',83);
+ERROR 3819 (HY000): Check constraint 'country_new_chk_1' is violated.
+
+
+3(b).
+ insert into jobs values ('MAL123','President',20000,40000), ('AVC67','Programmer',20000,30000), ('KPK3','Administration Vice President',15000,30000), ('APK8','Administration Assistant',3000,10000), ('VHL23','Finance Manager',8200,16000);
+
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from jobs;
++----------+-------------------------------------+--------------+--------------+
+| job_id     |    job_title                                   |  min_salary | max_salary  |
++----------+-------------------------------------+--------------+--------------+
+| APK8      | Administration Assistant           |       3000     |      10000     |
+| AVC67   |  Programmer                               |      20000   |      30000     |
+| KPK3      |  Administration Vice President |      15000   |      30000     |
+| MAL123 |  President                                    |      20000   |      40000     |
+| VHL23    |  Finance Manager                      |       8200     |      16000     |
++-----------+------------------------------------+-------------+---------------+
+5 rows in set (0.00 sec)
+
+
+3(c).
+  update jobs set min_salary=8000, max_salary=40000 where job_title='Programmer';
+
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from jobs;
++----------+-------------------------------------+--------------+--------------+
+| job_id     |    job_title                                   |  min_salary | max_salary  |
++----------+-------------------------------------+--------------+--------------+
+| APK8      | Administration Assistant           |       3000     |      10000     |
+| AVC67   |  Programmer                               |      8000     |      40000     |
+| KPK3      |  Administration Vice President |      15000   |      30000     |
+| MAL123 |  President                                    |      20000   |      40000     |
+| VHL23    |  Finance Manager                      |       8200     |      16000     |
++-----------+------------------------------------+-------------+---------------+
+5 rows in set (0.00 sec)
+
